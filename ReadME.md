@@ -191,4 +191,40 @@ The example `*/30 * * * *` means the job will run every thirty minutes. You can 
 kubectl apply -f log-collector-cronjob.yaml
 ```
 
-This will create a CronJob in your Kubernetes cluster that periodically runs the log collector script according to the specified schedule.
+This will create a CronJob in your Kubernetes cluster that periodically
+runs the log collector script according to the specified schedule.
+
+## Viewing Logs
+
+To monitor the operation of the script or troubleshoot any issue,
+you can view the logs of the CronJob pods.
+This can provide valuable information into the script's execution
+and help identify any errors or issues that may occur.
+
+Follow these steps to view the logs of a specific pod created by the CronJob:
+
+1. First, find the pods that have been created by the CronJob. You can list all pods
+in the namespace and find the ones related to your CronJob:
+
+```command
+# If your pod is in the default namespace
+kubectl get pods
+
+# If your CronJob pod is in a different namespace
+kubectl get pods -n <namespace>
+```
+
+Replace `<namespace>` with the namespace where your CronJob is running.
+
+2. Once you have identified the pod, use the kubectl logs command to view its logs:
+
+```command
+# If your pod is in the default namespace
+kubectl logs <pod-name>
+
+# If your CronJob pod is in a different namespace
+kubectl logs <pod-name> -n <namespace>
+```
+
+Replace `<pod-name>` with the name of the pod you want to check, and `<namespace>` with the namespace of the pod.
+
