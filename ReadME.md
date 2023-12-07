@@ -71,7 +71,52 @@ docker build -t k8s-log-collector:latest .
 
 ## Kubernetes Deployment
 
-Deploy the script as a CronJob in Kubernetes:
+### RBAC Configuration
+
+Before deploying the script, set up the necessary RBAC permissions:
+
+1.Create a ClusterRole:
+
+Define a ClusterRole with the necessary permissions to access the required Kubernetes resources.
+
+```command
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: log-collector-clusterrole
+rules:
+- apiGroups: ["apps"]
+  resources: ["statefulsets", "deployments"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list"]
+```
+
+Apply this configuration with `kubectl apply -f clusterrole.yaml`.
+
+2.Create a ClusterRoleBinding:
+Bind the ClusterRole to the service account that the script will use.
+
+```command
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: log-collector-clusterrolebinding
+subjects:
+- kind: ServiceAccount
+  name: default  # Replace with your ServiceAccount name if not using the default
+  namespace: default  # Replace with the namespace where your ServiceAccount is located
+roleRef:
+  kind: ClusterRole
+  name: log-collector-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+
+```
+
+Apply this configuration with kubectl apply -f clusterrolebinding.yaml.
+
+## Deploy the CronJob
 
 1. Create a Kubernetes Secret for AWS Credentials:
 
@@ -91,7 +136,7 @@ kind: CronJob
 metadata:
   name: log-collector-job
 spec:
-  schedule: "0 */4 * * *"  # This schedule runs the job every 4 hours. Adjust as needed.
+  schedule: "*/30 * * * *"  # This schedule runs the job every 30 minutes. Adjust as needed.
   jobTemplate:
     spec:
       template:
@@ -123,13 +168,18 @@ spec:
           restartPolicy: OnFailure
 ```
 
+Replace `[registry-username]/k8s-log-collector:latest` with your Docker image.
+
+Save this manifest to a file, e.g., `log-collector-cronjob.yaml`, and deploy
+the CronJob to your Kubernetes cluster with `kubectl apply -f log-collector-cronjob.yaml`.
+
 ## Notes
 
 - `Schedule`: The schedule field is a cron expression that determines how often the job runs.
-The example `0 */4 * * *` means the job will run every 4 hours. You can adjust this to suit your needs.
+The example `*/30 * * * *` means the job will run every thirty minutes. You can adjust this to suit your needs.
 
-- `Container Image`: Replace [registry-username]/k8s-log-collector:latest with the your Docker image.
-- `Environment Variables`: The manifest sets environment variables from the Kubernetes secret aws-credentials for AWS credentials. Other environment - - variables are set directly. Make sure these values match your environment and use case.
+- `Container Image`: Replace `[registry-username]/k8s-log-collector:latest` with the your Docker image.
+- `Environment Variables`: The manifest sets environment variables from the Kubernetes secret `aws-credentials` for AWS credentials. Other environment - - variables are set directly. Make sure these values match your environment and use case.
 - `Restart Policy`: The restartPolicy is set to OnFailure, meaning Kubernetes will restart the job if it fails.
 
 ## Deploying the CronJob
@@ -141,4 +191,4 @@ The example `0 */4 * * *` means the job will run every 4 hours. You can adjust t
 kubectl apply -f log-collector-cronjob.yaml
 ```
 
-This will create a CronJob in your Kubernetes cluster that periodically runs your log collector script according to the specified schedule.
+This will create a CronJob in your Kubernetes cluster that periodically runs the log collector script according to the specified schedule.
