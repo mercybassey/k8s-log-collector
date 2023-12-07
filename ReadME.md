@@ -56,14 +56,14 @@ git clone https://github.com/mercybassey/log-retriever-in-kubernetes
 cd log-retriever-in-kubernetes
 ```
 
-2.Install the required Python packages:
+2. Install the required Python packages:
 
 ```command
 pip install -r requirements.txt
 ```
 
-3.Set up the .env file with the necessary environment variables.
-4.Dockerize the script:
+3. Set up the .env file with the necessary environment variables.
+4. Dockerize the script:
 
 ```command
 docker build -t k8s-log-collector:latest .
@@ -75,7 +75,7 @@ docker build -t k8s-log-collector:latest .
 
 Before deploying the script, set up the necessary RBAC permissions:
 
-1.Create a ClusterRole:
+1. Create a ClusterRole:
 
 Define a ClusterRole with the necessary permissions to access the required Kubernetes resources.
 
@@ -95,7 +95,7 @@ rules:
 
 Apply this configuration with `kubectl apply -f clusterrole.yaml`.
 
-2.Create a ClusterRoleBinding:
+2. Create a ClusterRoleBinding:
 Bind the ClusterRole to the service account that the script will use.
 
 ```command
@@ -126,7 +126,7 @@ kubectl create secret generic aws-credentials \
   --from-literal=aws_secret_access_key=your-secret-access-key
 ```
 
-2.Deploy the CronJob:
+2. Deploy the CronJob:
 
 Create a Kubernetes manifest file and ensuring all environment variables are correctly set:
 
