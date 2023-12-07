@@ -86,7 +86,7 @@ kubectl create secret generic aws-credentials \
 Create a Kubernetes manifest file and ensuring all environment variables are correctly set:
 
 ```yaml
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: log-collector-job
