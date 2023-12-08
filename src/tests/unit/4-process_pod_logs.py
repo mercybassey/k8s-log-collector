@@ -1,9 +1,14 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from script import process_pod_logs
+
 import io
 import gzip
 from freezegun import freeze_time
+
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+from script import process_pod_logs
 
 
 

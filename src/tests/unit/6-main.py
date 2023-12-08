@@ -3,8 +3,9 @@ import pytest
 from unittest.mock import patch, MagicMock
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from script import main    
 
 def test_main():

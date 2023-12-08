@@ -2,7 +2,11 @@ import pytest
 from unittest.mock import patch, MagicMock
 from moto import mock_s3
 import boto3
-import script
+
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+from src import script
 
 
 @mock_s3

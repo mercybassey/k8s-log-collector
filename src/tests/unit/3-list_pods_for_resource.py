@@ -1,4 +1,7 @@
 from unittest.mock import MagicMock
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from script import list_pods_for_resource
 
 

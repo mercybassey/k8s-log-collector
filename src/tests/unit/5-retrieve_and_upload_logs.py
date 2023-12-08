@@ -2,9 +2,13 @@ import pytest
 from unittest.mock import patch, MagicMock
 from moto import mock_s3
 import boto3
-from script import retrieve_and_upload_logs
 from kubernetes.client.rest import ApiException
 from botocore.exceptions import BotoCoreError
+
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+from script import retrieve_and_upload_logs
 
 def setup_mock_s3():
     s3 = boto3.client('s3', region_name='us-east-1')
