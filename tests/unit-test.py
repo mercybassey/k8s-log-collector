@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from script import initialize_clients  
+from script import initialize_clients, get_kubernetes_resource
 
 def test_initialize_clients():
     with patch('script.config.load_incluster_config'), \
@@ -20,3 +20,32 @@ def test_initialize_clients():
         assert isinstance(k8s_apps_v1, MagicMock)
         assert isinstance(k8s_core_v1, MagicMock)
         assert isinstance(s3_client, MagicMock)
+
+def test_get_kubernetes_statefulset_resource():
+    mock_k8s_apps_v1 = MagicMock()
+    mock_k8s_apps_v1.read_namespaced_stateful_set = MagicMock()
+
+    namespace = 'test-namespace'
+    resource_name = 'test-statefulset'
+    resource_type = 'statefulset'
+
+    
+    result = get_kubernetes_resource(mock_k8s_apps_v1, namespace, resource_name, resource_type)
+
+    # Assert that the mock method was called with correct parameters
+    mock_k8s_apps_v1.read_namespaced_stateful_set.assert_called_with(resource_name, namespace)
+
+def  test_get_kubernetes_deployment_resource():
+    mock_k8s_apps_v1 = MagicMock()
+    mock_k8s_apps_v1.read_namespaced_deployment = MagicMock()
+
+    namespace = 'test-namespace'
+    resource_name = 'test-deployment'
+    resource_type = 'deployment'
+
+    result = get_kubernetes_resource(mock_k8s_apps_v1, namespace, resource_name, resource_type)
+
+    # Assert that the mock method was called with correct parameters
+    mock_k8s_apps_v1.read_namespaced_deployment.assert_called_with(resource_name, namespace)
+
+       
