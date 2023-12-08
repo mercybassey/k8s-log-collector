@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 from moto import mock_s3
 import boto3
 import script
-from kubernetes.client.rest import ApiException
+
 
 @mock_s3
 def test_integration():
