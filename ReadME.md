@@ -3,7 +3,7 @@
 ## Overview
 
 This Python script is designed to collect logs from pods within a specified Kubernetes
-Deployment or StatefulSet, compress them, and upload the compressed logs to an AWS S3 bucket.
+Deployment or StatefulSet, compress them and upload the compressed logs to an AWS S3 bucket.
 It's suitable for running within a Kubernetes cluster, leveraging the cluster's service account
 for Kubernetes API authentication.
 
@@ -11,8 +11,8 @@ for Kubernetes API authentication.
 
 - Supports collecting logs from both Kubernetes Deployments and StatefulSets.
 - Compresses the collected logs using gzip for efficient storage.
-- Uploads the compressed logs to a specified AWS S3 bucket.
-- Robust error handling and logging for troubleshooting.
+- Upload the compressed logs to a specified AWS S3 bucket.
+- Error handling and logging for troubleshooting.
 
 ## Prerequisites
 
