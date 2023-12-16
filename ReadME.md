@@ -63,10 +63,16 @@ pip install -r requirements.txt
 ```
 
 3. Set up the .env file with the necessary environment variables.
-4. Dockerize the script:
+4. Dockerize the script and deploy to DockerHub(or any container registry of your choice):
 
 ```command
-docker build -t k8s-log-collector:latest .
+docker build -t <dockerhub-username>/k8s-log-collector:latest .
+docker push <dockerhub-username>/k8s-log-collector:latest
+```
+
+5 Deploy to container registry, for example DockerHub:
+```command
+
 ```
 
 ## Kubernetes Deployment
