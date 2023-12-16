@@ -70,11 +70,6 @@ docker build -t <dockerhub-username>/k8s-log-collector:latest .
 docker push <dockerhub-username>/k8s-log-collector:latest
 ```
 
-5 Deploy to container registry, for example DockerHub:
-```command
-
-```
-
 ## Kubernetes Deployment
 
 ### RBAC Configuration
@@ -85,7 +80,7 @@ Before deploying the script, set up the necessary RBAC permissions:
 
 Define a ClusterRole with the necessary permissions to access the required Kubernetes resources.
 
-```command
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -104,7 +99,7 @@ Apply this configuration with `kubectl apply -f clusterrole.yaml`.
 2. Create a ClusterRoleBinding:
 Bind the ClusterRole to the service account that the script will use.
 
-```command
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
