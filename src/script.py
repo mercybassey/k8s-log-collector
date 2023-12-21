@@ -1,7 +1,9 @@
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
-from botocore.exceptions import BotoCoreError, ClientError
+
 import boto3
+from botocore.exceptions import BotoCoreError, ClientError
+
 import gzip
 import io
 from datetime import datetime
