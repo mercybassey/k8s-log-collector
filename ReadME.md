@@ -159,13 +159,13 @@ spec:
               - name: AWS_REGION
                 value: "your-region"
               - name: NAMESPACE
-                value: "database"
+                value: "your-namespace"
               - name: RESOURCE_TYPE
                 value: "deployment"  # or "statefulset"
               - name: RESOURCE_NAME
-                value: "postgres"
+                value: "name of the deployment or statefulset"
               - name: BUCKET_NAME
-                value: "postgres-database-logs"
+                value: "your-aws-bucket-name"
           restartPolicy: OnFailure
 ```
 
