@@ -22,8 +22,8 @@ for Kubernetes API authentication.
 
 ## Configuration
 
-The script uses environment variables for configuration, which can be set in a .env file
-for local development or in the Kubernetes CronJob manifest for deployment.
+The script uses environment variables for configuration, which can be set as environment variables
+in a Kubernetes CronJob manifest for deployment.
 
 ## Environment Variables
 
@@ -34,41 +34,6 @@ for local development or in the Kubernetes CronJob manifest for deployment.
 - `RESOURCE_TYPE`: Type of the Kubernetes resource (deployment or statefulset).
 - `RESOURCE_NAME`: Name of the Kubernetes resource (Deployment or StatefulSet).
 - `BUCKET_NAME`: Name of the AWS S3 bucket for log storage.
-
-## .env File Example
-
-```command
-AWS_ACCESS_KEY_ID=your-access-key-id
-AWS_SECRET_ACCESS_KEY=your-secret-access-key
-AWS_REGION=your-region
-NAMESPACE=database
-RESOURCE_TYPE=deployment
-RESOURCE_NAME=postgres
-BUCKET_NAME=postgres-database-logs
-```
-
-## Local Setup
-
-1. Clone the repository and navigate to the directory:
-
-```command
-git clone https://github.com/mercybassey/log-retriever-in-kubernetes
-cd log-retriever-in-kubernetes
-```
-
-2. Install the required Python packages:
-
-```command
-pip install -r requirements.txt
-```
-
-3. Set up the .env file with the necessary environment variables.
-4. Dockerize the script and deploy to DockerHub(or any container registry of your choice):
-
-```command
-docker build -t <dockerhub-username>/k8s-log-collector:latest .
-docker push <dockerhub-username>/k8s-log-collector:latest
-```
 
 ## Kubernetes Deployment
 
@@ -144,7 +109,7 @@ spec:
         spec:
           containers:
           - name: log-collector
-            image: [registry-username]/k8s-log-collector:latest
+            image: mercybassey/k8s-log-collector:latest
             env:
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
@@ -168,8 +133,6 @@ spec:
                 value: "your-aws-bucket-name"
           restartPolicy: OnFailure
 ```
-
-Replace `[registry-username]/k8s-log-collector:latest` with your Docker image.
 
 Save this manifest to a file, e.g., `log-collector-cronjob.yaml`, and deploy
 the CronJob to your Kubernetes cluster with `kubectl apply -f log-collector-cronjob.yaml`.
