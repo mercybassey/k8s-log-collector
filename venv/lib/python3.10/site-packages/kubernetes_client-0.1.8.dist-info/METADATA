@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: kubernetes-client
+Version: 0.1.8
+Summary: High-level functional API for Kubernetes Resources and 3rd party CRDs, based on the official kubernetes-client, and more.
+Home-page: 
+Author-email: pydemia@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.8
+Requires-Dist: mypy
+Requires-Dist: coverage
+Requires-Dist: pytest-cov
+Requires-Dist: kubernetes
+Requires-Dist: table-logger
+Requires-Dist: pydantic
+
+UNKNOWN
+
