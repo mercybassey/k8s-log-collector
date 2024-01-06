@@ -19,12 +19,10 @@ def test_initialize_clients():
        
         k8s_apps_v1, k8s_core_v1, s3_client = initialize_clients()
 
-     
         assert mock_apps_v1_api.called
         assert mock_core_v1_api.called
         assert mock_s3_client.called
 
-        
         assert isinstance(k8s_apps_v1, MagicMock)
         assert isinstance(k8s_core_v1, MagicMock)
         assert isinstance(s3_client, MagicMock)

@@ -14,7 +14,6 @@ sys.path.append(os.path.join(script_dir, '..', '..'))
 from src.process_pod_logs import process_pod_logs
 
 
-
 def test_process_pod_logs():
     
     mock_k8s_core_v1 = MagicMock()

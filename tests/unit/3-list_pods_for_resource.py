@@ -15,10 +15,8 @@ def test_list_pods_for_resource():
     mock_resource.spec.selector.match_labels = {'key1': 'value1', 'key2': 'value2'}
     namespace = 'test-namespace'
 
-   
     list_pods_for_resource(mock_k8s_core_v1, namespace, mock_resource)
-
-
+    
     expected_label_selector = 'key1=value1,key2=value2'
 
     
