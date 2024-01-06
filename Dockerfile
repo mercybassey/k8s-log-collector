@@ -17,4 +17,4 @@ EXPOSE 80
 ENV NAME World
 
 
-CMD ["python", "main.py"]
+CMD ["python", "script.py"]
