@@ -2,14 +2,25 @@
 
 ## Overview
 
-This Python script is designed to collect logs from pods within a specified Kubernetes
-Deployment or StatefulSet, compress them and upload the compressed logs to an AWS S3 bucket.
-It's suitable for running within a Kubernetes cluster, leveraging the cluster's service account
+Logs are incredibly important for any application, especially when it comes to figuring out
+problems as they pop up. When you're working with applications in Kubernetes, managing these
+logs really well becomes super important. But here's the thing: dealing with logs in Kubernetes
+can get pretty tricky, especially when your applications are churning out a ton of them over time.
+It gets even tougher because these logs don't stick around forever – they disappear after a while,
+making it hard to do a deep dive and really understand what's been happening.
+
+This project tackles the task of collecting logs by making the whole process a lot simpler,
+whether we're talking about individual pods or ones that are part of a specific Kubernetes Deployment
+or StatefulSet. It smartly compresses these logs to make them smaller and then sends them off to a safe and
+central spot – an AWS S3 bucket. This way, all those important historical logs are kept safe and sound,
+and teams can easily grab them as gzip files whenever they need to dive deep into serious log analysis.
+
+This project is suitable for running within a Kubernetes cluster, leveraging the cluster's service account
 for Kubernetes API authentication.
 
 ## Features
 
-- Supports collecting logs from both Kubernetes Deployments and StatefulSets.
+- Supports collecting logs from both Kubernetes standalone Pods, Deployments and StatefulSets.
 - Compresses the collected logs using gzip for efficient storage.
 - Upload the compressed logs to a specified AWS S3 bucket.
 - Error handling and logging for troubleshooting.
@@ -18,7 +29,6 @@ for Kubernetes API authentication.
 
 - Access to a Kubernetes cluster with permissions to create CronJobs.
 - An AWS account with an S3 bucket configured.
-- Python 3.x for local development and testing.
 
 ## Configuration
 
@@ -34,6 +44,12 @@ in a Kubernetes CronJob manifest for deployment.
 - `RESOURCE_TYPE`: Type of the Kubernetes resource (deployment or statefulset).
 - `RESOURCE_NAME`: Name of the Kubernetes resource (Deployment or StatefulSet).
 - `BUCKET_NAME`: Name of the AWS S3 bucket for log storage.
+- `LOG_LEVEL`: The logging level for controlling the verbosity of logs. Possible values include:
+  - `DEBUG`: Detailed information, useful for debugging.
+  - `INFO`: General information about the script's progress (default).
+  - `WARNING`: Indication of possible issues or unexpected behavior.
+  - `ERROR`: Indication of errors that do not prevent the script from running.
+  - `CRITICAL`: Critical errors that may lead to the termination of the script.
 
 ## Kubernetes Deployment
 
@@ -52,7 +68,7 @@ metadata:
   name: log-collector-clusterrole
 rules:
 - apiGroups: ["apps"]
-  resources: ["statefulsets", "deployments"]
+  resources: ["pods, "statefulsets", "deployments"]
   verbs: ["get", "list"]
 - apiGroups: [""]
   resources: ["pods", "pods/log"]
@@ -80,7 +96,7 @@ roleRef:
 
 ```
 
-Apply this configuration with kubectl apply -f clusterrolebinding.yaml.
+Apply this configuration with `kubectl apply -f clusterrolebinding.yaml`.
 
 ## Deploy the CronJob
 
@@ -94,7 +110,7 @@ kubectl create secret generic aws-credentials \
 
 2. Deploy the CronJob:
 
-Create a Kubernetes manifest file and ensuring all environment variables are correctly set:
+Create a Kubernetes manifest file and ensure all environment variables are correctly set:
 
 ```yaml
 apiVersion: batch/v1
@@ -126,7 +142,7 @@ spec:
               - name: NAMESPACE
                 value: "your-namespace"
               - name: RESOURCE_TYPE
-                value: "deployment"  # or "statefulset"
+                value: "pod"  # or "statefulset" or "deployment"
               - name: RESOURCE_NAME
                 value: "name of the deployment or statefulset"
               - name: BUCKET_NAME
@@ -142,8 +158,7 @@ the CronJob to your Kubernetes cluster with `kubectl apply -f log-collector-cron
 - `Schedule`: The schedule field is a cron expression that determines how often the job runs.
 The example `*/30 * * * *` means the job will run every thirty minutes. You can adjust this to suit your needs.
 
-- `Container Image`: Replace `[registry-username]/k8s-log-collector:latest` with the your Docker image.
-- `Environment Variables`: The manifest sets environment variables from the Kubernetes secret `aws-credentials` for AWS credentials. Other environment - - variables are set directly. Make sure these values match your environment and use case.
+- `Environment Variables`: The manifest sets environment variables from the Kubernetes secret `aws-credentials` for AWS credentials. Other environment - - variables are to be set directly.
 - `Restart Policy`: The restartPolicy is set to OnFailure, meaning Kubernetes will restart the job if it fails.
 
 ## Deploying the CronJob

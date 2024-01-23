@@ -2,11 +2,14 @@ from datetime import datetime
 import gzip
 import io
 import logging
+import os
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+log_level = os.getenv('LOG_LEVEL', 'INFO')
+
+logging.basicConfig(level=logging.log_level, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def process_pod_logs(k8s_core_v1, s3_client, pod, namespace, bucket_name):
+def process_pod_logs(k8s_core_v1, s3_client, pod, namespace, bucket_name):  
     pod_name = pod.metadata.name
     logs = k8s_core_v1.read_namespaced_pod_log(pod_name, namespace)
     compressed_logs = gzip.compress(logs.encode('utf-8'))
