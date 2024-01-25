@@ -208,7 +208,9 @@ Replace `<pod-name>` with the name of the pod you want to check, and `<namespace
 - Wait for Issue Approval 
 - Fork the Repository
 - Clone your Fork
+- cd [folder name]
 - Create a new branch
+- Run `pip install requirements.txt`
 - Make your change
 - Test your change
 - Commit your change
