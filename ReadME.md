@@ -44,12 +44,7 @@ in a Kubernetes CronJob manifest for deployment.
 - `RESOURCE_TYPE`: Type of the Kubernetes resource (deployment or statefulset).
 - `RESOURCE_NAME`: Name of the Kubernetes resource (Deployment or StatefulSet).
 - `BUCKET_NAME`: Name of the AWS S3 bucket for log storage.
-- `LOG_LEVEL`: The logging level for controlling the verbosity of logs. Possible values include:
-  - `DEBUG`: Detailed information, useful for debugging.
-  - `INFO`: General information about the script's progress (default).
-  - `WARNING`: Indication of possible issues or unexpected behavior.
-  - `ERROR`: Indication of errors that do not prevent the script from running.
-  - `CRITICAL`: Critical errors that may lead to the termination of the script.
+
 
 ## Kubernetes Deployment
 
@@ -68,7 +63,7 @@ metadata:
   name: log-collector-clusterrole
 rules:
 - apiGroups: ["apps"]
-  resources: ["pods, "statefulsets", "deployments"]
+  resources: ["pods", "statefulsets", "deployments"]
   verbs: ["get", "list"]
 - apiGroups: [""]
   resources: ["pods", "pods/log"]
@@ -207,3 +202,16 @@ kubectl logs <pod-name> -n <namespace>
 
 Replace `<pod-name>` with the name of the pod you want to check, and `<namespace>` with the namespace of the pod.
 
+## How to Contribute
+
+- Create an Issue
+- Wait for Issue Approval 
+- Fork the Repository
+- Clone your Fork
+- Create a new branch
+- Make your change
+- Test your change
+- Commit your change
+- Create a Pull Request
+
+To ensure everything works smoothly, remember to provide access credentials and include all the necessary environment variables when you're testing. Also, it's really important that you add tests for any changes you make. This helps me maintain the quality and reliability of this project. Thanks for contributing!

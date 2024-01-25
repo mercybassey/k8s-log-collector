@@ -4,9 +4,8 @@ import io
 import logging
 import os
 
-log_level = os.getenv('LOG_LEVEL', 'INFO')
 
-logging.basicConfig(level=logging.log_level, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.info, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def process_pod_logs(k8s_core_v1, s3_client, pod, namespace, bucket_name):  
