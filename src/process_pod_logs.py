@@ -2,10 +2,8 @@ from datetime import datetime
 import gzip
 import io
 import logging
-import os
 
-
-logging.basicConfig(level=logging.info, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def process_pod_logs(k8s_core_v1, s3_client, pod, namespace, bucket_name):  

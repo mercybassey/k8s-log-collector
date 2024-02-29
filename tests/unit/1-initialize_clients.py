@@ -11,10 +11,10 @@ from src.initialize_clients import initialize_clients
 
 
 def test_initialize_clients():
-    with patch('src.initialize.config.load_incluster_config'), \
-         patch('src.initialize.client.AppsV1Api', return_value=MagicMock()) as mock_apps_v1_api, \
-         patch('src.initialize.client.CoreV1Api', return_value=MagicMock()) as mock_core_v1_api, \
-         patch('src.initialize.boto3.client', return_value=MagicMock()) as mock_s3_client:
+    with patch('src.initialize_clients.config.load_incluster_config'), \
+         patch('src.initialize_clients.client.AppsV1Api', return_value=MagicMock()) as mock_apps_v1_api, \
+         patch('src.initialize_clients.client.CoreV1Api', return_value=MagicMock()) as mock_core_v1_api, \
+         patch('src.initialize_clients.boto3.client', return_value=MagicMock()) as mock_s3_client:
 
        
         k8s_apps_v1, k8s_core_v1, s3_client = initialize_clients()
