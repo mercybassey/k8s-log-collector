@@ -8,7 +8,6 @@ sys.path.append(os.path.join(script_dir, '..', '..'))
 from src.list_pods_for_resource import list_pods_for_resource
 
 
-
 def test_list_pods_for_resource():
     mock_k8s_core_v1 = MagicMock()
     mock_resource = MagicMock()

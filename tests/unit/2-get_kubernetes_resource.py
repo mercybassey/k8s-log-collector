@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 import sys
 import os
@@ -7,10 +7,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(script_dir, '..', '..'))
 
 from src.get_kubernetes_resource import get_kubernetes_resource
-
-
-
-from unittest.mock import patch, MagicMock
 
 
 def test_get_kubernetes_statefulset_resource():
