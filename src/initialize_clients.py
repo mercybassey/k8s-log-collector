@@ -3,8 +3,6 @@ import boto3
 
 import os
 
-
-
 def initialize_clients():
     config.load_incluster_config()
     k8s_apps_v1 = client.AppsV1Api()
