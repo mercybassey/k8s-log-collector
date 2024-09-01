@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "k8s-log-collector"
+version = "1.0.1"
+description = "This is my first automation tool. I retrieves logs from Kubernetes resources and pushes them to an AWS S3 bucket"
+authors = ["mercybassey <udohmercy911@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+kubernetes = "^30.1.0"
+boto3 = "^1.35.10"
+freezegun = "^1.5.1"
+moto = "^5.0.13"
+pytest = "^8.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
